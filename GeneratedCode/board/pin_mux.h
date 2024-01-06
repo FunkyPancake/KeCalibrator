@@ -77,15 +77,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_LED4_PIN_MASK (1U << 10U)      /*!<@brief PORT pin mask */
                                                       /* @} */
 
-/*! @name PORTA0 (number 50), ENC_A
-  @{ */
-
-/* Symbols to be used with PORT driver */
-#define BOARD_INITPINS_ENC_A_PORT PORTA               /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_ENC_A_PIN 0U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_ENC_A_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
-                                                      /* @} */
-
 /*! @name PORTC0 (number 26), MUX_A
   @{ */
 
@@ -138,18 +129,31 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_LED_IP_PIN_MASK (1U << 15U)      /*!<@brief PORT pin mask */
                                                         /* @} */
 
-/*! @name PORTC14 (number 30), LED_DONE
+/*! @name PORTC2 (number 21), BRD_DETEC
   @{ */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_LED_DONE_GPIO GPIOC                /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINS_LED_DONE_GPIO_PIN_MASK (1U << 14U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_BRD_DETEC_GPIO GPIOC               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_BRD_DETEC_GPIO_PIN_MASK (1U << 2U) /*!<@brief GPIO pin mask */
 
 /* Symbols to be used with PORT driver */
-#define BOARD_INITPINS_LED_DONE_PORT PORTC                /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_LED_DONE_PIN 14U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_LED_DONE_PIN_MASK (1U << 14U)      /*!<@brief PORT pin mask */
+#define BOARD_INITPINS_BRD_DETEC_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_BRD_DETEC_PIN 2U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_BRD_DETEC_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
                                                           /* @} */
+
+/*! @name PORTC3 (number 20), LED_DONE
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_LED_DONE_GPIO GPIOC               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED_DONE_GPIO_PIN_MASK (1U << 3U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_LED_DONE_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_LED_DONE_PIN 3U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_LED_DONE_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

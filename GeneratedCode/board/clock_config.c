@@ -134,11 +134,6 @@ outputs:
 - {id: Flash_clock.outFreq, value: 24 MHz}
 - {id: LPO1KCLK.outFreq, value: 1 kHz}
 - {id: LPO_clock.outFreq, value: 128 kHz}
-- {id: PCC.PCC_ADC0_CLK.outFreq, value: 21 MHz}
-- {id: PCC.PCC_ADC1_CLK.outFreq, value: 21 MHz}
-- {id: PCC.PCC_FTM0_CLK.outFreq, value: 12 MHz}
-- {id: PCC.PCC_FTM2_CLK.outFreq, value: 12 MHz}
-- {id: PCC.PCC_FTM3_CLK.outFreq, value: 21 MHz}
 - {id: PCC.PCC_LPSPI0_CLK.outFreq, value: 21 MHz}
 - {id: PCC.PCC_LPSPI1_CLK.outFreq, value: 21 MHz}
 - {id: PLLDIV1_CLK.outFreq, value: 21 MHz}
@@ -152,11 +147,6 @@ outputs:
 settings:
 - {id: SCGMode, value: SPLL}
 - {id: powerMode, value: HSRUN}
-- {id: PCC.PCC_ADC0_SEL.sel, value: SCG.PLLDIV2_CLK}
-- {id: PCC.PCC_ADC1_SEL.sel, value: SCG.PLLDIV2_CLK}
-- {id: PCC.PCC_FTM0_SEL.sel, value: SCG.SOSCDIV1_CLK}
-- {id: PCC.PCC_FTM2_SEL.sel, value: SCG.SOSCDIV1_CLK}
-- {id: PCC.PCC_FTM3_SEL.sel, value: SCG.PLLDIV1_CLK}
 - {id: PCC.PCC_LPSPI0_SEL.sel, value: SCG.PLLDIV2_CLK}
 - {id: PCC.PCC_LPSPI1_SEL.sel, value: SCG.PLLDIV2_CLK}
 - {id: SCG.DIVBUS.scale, value: '2'}
@@ -256,19 +246,9 @@ void BOARD_BootClockRUN(void)
     SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
     /* Set Debug trace clock. */
     CLOCK_CONFIG_SetTraceClock(SIM_CHIPCTL_TRACECLK_SEL_CORECLK, 0, 0, true);
-    /* Set PCC ADC0 selection */
-    CLOCK_SetIpSrc(kCLOCK_Adc0, kCLOCK_IpSrcSysPllAsync);
-    /* Set PCC ADC1 selection */
-    CLOCK_SetIpSrc(kCLOCK_Adc1, kCLOCK_IpSrcSysPllAsync);
     /* Set PCC LPSPI0 selection */
     CLOCK_SetIpSrc(kCLOCK_Lpspi0, kCLOCK_IpSrcSysPllAsync);
     /* Set PCC LPSPI1 selection */
     CLOCK_SetIpSrc(kCLOCK_Lpspi1, kCLOCK_IpSrcSysPllAsync);
-    /* Set PCC FTM0 selection */
-    CLOCK_SetIpSrc(kCLOCK_Ftm0, kCLOCK_IpSrcSysOscAsync);
-    /* Set PCC FTM2 selection */
-    CLOCK_SetIpSrc(kCLOCK_Ftm2, kCLOCK_IpSrcSysOscAsync);
-    /* Set PCC FTM3 selection */
-    CLOCK_SetIpSrc(kCLOCK_Ftm3, kCLOCK_IpSrcSysPllAsync);
 }
 

@@ -34,7 +34,8 @@ pin_labels:
 - {pin_num: '27', pin_signal: ADC0_SE15/PTC17/FTM1_FLT3/LPI2C1_SCLS, label: MUX_B, identifier: MUX_B}
 - {pin_num: '28', pin_signal: ADC0_SE14/PTC16/FTM1_FLT2/LPI2C1_SDAS, label: MUX_C, identifier: MUX_C}
 - {pin_num: '29', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3, label: LED_IP, identifier: LED_IP}
-- {pin_num: '30', pin_signal: ADC0_SE12/ACMP2_IN5/PTC14/FTM1_CH2, label: LED_DONE, identifier: LED_DONE}
+- {pin_num: '21', pin_signal: ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX, label: BRD_DETEC, identifier: BRD_DETEC}
+- {pin_num: '20', pin_signal: ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX, label: LED_DONE, identifier: LED_DONE}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -81,12 +82,13 @@ BOARD_InitPins:
   - {pin_num: '18', peripheral: GPIOB, signal: 'GPIO, 5', pin_signal: PTB5/FTM0_CH5/LPSPI0_PCS1/TRGMUX_IN0/ACMP1_OUT, direction: OUTPUT}
   - {pin_num: '3', peripheral: GPIOE, signal: 'GPIO, 11', pin_signal: ADC2_SE13/PTE11/PWT_IN1/LPTMR0_ALT1/FTM2_CH5/FXIO_D5/TRGMUX_OUT5, direction: OUTPUT}
   - {pin_num: '4', peripheral: GPIOE, signal: 'GPIO, 10', pin_signal: ADC2_SE12/PTE10/CLKOUT/FTM2_CH4/FXIO_D4/TRGMUX_OUT4, direction: OUTPUT}
-  - {pin_num: '50', peripheral: ADC0, signal: 'SE, 0', pin_signal: ADC0_SE0/ACMP0_IN0/PTA0/FTM2_CH1/LPI2C0_SCLS/FXIO_D2/FTM2_QD_PHA/LPUART0_CTS/TRGMUX_OUT3}
   - {pin_num: '26', peripheral: GPIOC, signal: 'GPIO, 0', pin_signal: ADC0_SE8/ACMP1_IN4/PTC0/FTM0_CH0/FTM1_CH6, direction: OUTPUT}
   - {pin_num: '27', peripheral: GPIOC, signal: 'GPIO, 17', pin_signal: ADC0_SE15/PTC17/FTM1_FLT3/LPI2C1_SCLS, direction: OUTPUT}
   - {pin_num: '28', peripheral: GPIOC, signal: 'GPIO, 16', pin_signal: ADC0_SE14/PTC16/FTM1_FLT2/LPI2C1_SDAS, direction: OUTPUT}
-  - {pin_num: '29', peripheral: GPIOC, signal: 'GPIO, 15', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3}
-  - {pin_num: '30', peripheral: GPIOC, signal: 'GPIO, 14', pin_signal: ADC0_SE12/ACMP2_IN5/PTC14/FTM1_CH2}
+  - {pin_num: '29', peripheral: GPIOC, signal: 'GPIO, 15', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3, direction: OUTPUT, gpio_init_state: 'true'}
+  - {pin_num: '21', peripheral: GPIOC, signal: 'GPIO, 2', pin_signal: ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX, direction: INPUT}
+  - {pin_num: '16', peripheral: DAC0, signal: OUT, pin_signal: ACMP2_IN2/DAC0_OUT/PTE9/FTM0_CH7/LPUART2_CTS}
+  - {pin_num: '20', peripheral: GPIOC, signal: 'GPIO, 3', pin_signal: ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX, direction: OUTPUT, gpio_init_state: 'true'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -124,6 +126,27 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTC0 (pin 26)  */
     GPIO_PinInit(BOARD_INITPINS_MUX_A_GPIO, BOARD_INITPINS_MUX_A_PIN, &MUX_A_config);
 
+    gpio_pin_config_t BRD_DETEC_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC2 (pin 21)  */
+    GPIO_PinInit(BOARD_INITPINS_BRD_DETEC_GPIO, BOARD_INITPINS_BRD_DETEC_PIN, &BRD_DETEC_config);
+
+    gpio_pin_config_t LED_DONE_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 1U
+    };
+    /* Initialize GPIO functionality on pin PTC3 (pin 20)  */
+    GPIO_PinInit(BOARD_INITPINS_LED_DONE_GPIO, BOARD_INITPINS_LED_DONE_PIN, &LED_DONE_config);
+
+    gpio_pin_config_t LED_IP_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 1U
+    };
+    /* Initialize GPIO functionality on pin PTC15 (pin 29)  */
+    GPIO_PinInit(BOARD_INITPINS_LED_IP_GPIO, BOARD_INITPINS_LED_IP_PIN, &LED_IP_config);
+
     gpio_pin_config_t MUX_C_config = {
         .pinDirection = kGPIO_DigitalOutput,
         .outputLogic = 0U
@@ -159,9 +182,6 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTE11 (pin 3)  */
     GPIO_PinInit(BOARD_INITPINS_LED3_GPIO, BOARD_INITPINS_LED3_PIN, &LED3_config);
 
-    /* PORTA0 (pin 50) is configured as ADC0_SE0 */
-    PORT_SetPinMux(BOARD_INITPINS_ENC_A_PORT, BOARD_INITPINS_ENC_A_PIN, kPORT_PinDisabledOrAnalog);
-
     /* PORTA10 (pin 58) is configured as noetm_Trace_SWO */
     PORT_SetPinMux(PORTA, 10U, kPORT_MuxAlt7);
 
@@ -195,9 +215,6 @@ void BOARD_InitPins(void)
     /* PORTC0 (pin 26) is configured as PTC0 */
     PORT_SetPinMux(BOARD_INITPINS_MUX_A_PORT, BOARD_INITPINS_MUX_A_PIN, kPORT_MuxAsGpio);
 
-    /* PORTC14 (pin 30) is configured as PTC14 */
-    PORT_SetPinMux(BOARD_INITPINS_LED_DONE_PORT, BOARD_INITPINS_LED_DONE_PIN, kPORT_MuxAsGpio);
-
     /* PORTC15 (pin 29) is configured as PTC15 */
     PORT_SetPinMux(BOARD_INITPINS_LED_IP_PORT, BOARD_INITPINS_LED_IP_PIN, kPORT_MuxAsGpio);
 
@@ -206,6 +223,12 @@ void BOARD_InitPins(void)
 
     /* PORTC17 (pin 27) is configured as PTC17 */
     PORT_SetPinMux(BOARD_INITPINS_MUX_B_PORT, BOARD_INITPINS_MUX_B_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC2 (pin 21) is configured as PTC2 */
+    PORT_SetPinMux(BOARD_INITPINS_BRD_DETEC_PORT, BOARD_INITPINS_BRD_DETEC_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC3 (pin 20) is configured as PTC3 */
+    PORT_SetPinMux(BOARD_INITPINS_LED_DONE_PORT, BOARD_INITPINS_LED_DONE_PIN, kPORT_MuxAsGpio);
 
     /* PORTC4 (pin 62) is configured as SWD_CLK */
     PORT_SetPinMux(PORTC, 4U, kPORT_MuxAlt7);
@@ -236,6 +259,9 @@ void BOARD_InitPins(void)
 
     /* PORTE8 (pin 17) is configured as PTE8 */
     PORT_SetPinMux(BOARD_INITPINS_LED1_PORT, BOARD_INITPINS_LED1_PIN, kPORT_MuxAsGpio);
+
+    /* PORTE9 (pin 16) is configured as DAC0_OUT */
+    PORT_SetPinMux(PORTE, 9U, kPORT_PinDisabledOrAnalog);
 }
 /***********************************************************************************************************************
  * EOF

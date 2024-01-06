@@ -49,7 +49,8 @@
                <pin_label pin_num="27" pin_signal="ADC0_SE15/PTC17/FTM1_FLT3/LPI2C1_SCLS" label="MUX_B" identifier="MUX_B"/>
                <pin_label pin_num="28" pin_signal="ADC0_SE14/PTC16/FTM1_FLT2/LPI2C1_SDAS" label="MUX_C" identifier="MUX_C"/>
                <pin_label pin_num="29" pin_signal="ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3" label="LED_IP" identifier="LED_IP"/>
-               <pin_label pin_num="30" pin_signal="ADC0_SE12/ACMP2_IN5/PTC14/FTM1_CH2" label="LED_DONE" identifier="LED_DONE"/>
+               <pin_label pin_num="21" pin_signal="ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX" label="BRD_DETEC" identifier="BRD_DETEC"/>
+               <pin_label pin_num="20" pin_signal="ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX" label="LED_DONE" identifier="LED_DONE"/>
             </pin_labels>
             <external_user_signals>
                <routingDetailsColumns/>
@@ -95,7 +96,7 @@
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="Peripheral" resourceId="ADC0" description="Peripheral ADC0 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                  <dependency resourceType="Peripheral" resourceId="DAC0" description="Peripheral DAC0 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -153,7 +154,6 @@
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
-                  <pin peripheral="ADC0" signal="SE, 0" pin_num="50" pin_signal="ADC0_SE0/ACMP0_IN0/PTA0/FTM2_CH1/LPI2C0_SCLS/FXIO_D2/FTM2_QD_PHA/LPUART0_CTS/TRGMUX_OUT3"/>
                   <pin peripheral="GPIOC" signal="GPIO, 0" pin_num="26" pin_signal="ADC0_SE8/ACMP1_IN4/PTC0/FTM0_CH0/FTM1_CH6">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
@@ -169,8 +169,24 @@
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
-                  <pin peripheral="GPIOC" signal="GPIO, 15" pin_num="29" pin_signal="ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3"/>
-                  <pin peripheral="GPIOC" signal="GPIO, 14" pin_num="30" pin_signal="ADC0_SE12/ACMP2_IN5/PTC14/FTM1_CH2"/>
+                  <pin peripheral="GPIOC" signal="GPIO, 15" pin_num="29" pin_signal="ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                        <pin_feature name="gpio_init_state" value="true"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 2" pin_num="21" pin_signal="ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="DAC0" signal="OUT" pin_num="16" pin_signal="ACMP2_IN2/DAC0_OUT/PTE9/FTM0_CH7/LPUART2_CTS"/>
+                  <pin peripheral="GPIOC" signal="GPIO, 3" pin_num="20" pin_signal="ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                        <pin_feature name="gpio_init_state" value="true"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
@@ -228,11 +244,6 @@
                   <clock_output id="Flash_clock.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="LPO1KCLK.outFreq" value="1 kHz" locked="false" accuracy=""/>
                   <clock_output id="LPO_clock.outFreq" value="128 kHz" locked="false" accuracy=""/>
-                  <clock_output id="PCC.PCC_ADC0_CLK.outFreq" value="21 MHz" locked="false" accuracy=""/>
-                  <clock_output id="PCC.PCC_ADC1_CLK.outFreq" value="21 MHz" locked="false" accuracy=""/>
-                  <clock_output id="PCC.PCC_FTM0_CLK.outFreq" value="12 MHz" locked="false" accuracy=""/>
-                  <clock_output id="PCC.PCC_FTM2_CLK.outFreq" value="12 MHz" locked="false" accuracy=""/>
-                  <clock_output id="PCC.PCC_FTM3_CLK.outFreq" value="21 MHz" locked="false" accuracy=""/>
                   <clock_output id="PCC.PCC_LPSPI0_CLK.outFreq" value="21 MHz" locked="false" accuracy=""/>
                   <clock_output id="PCC.PCC_LPSPI1_CLK.outFreq" value="21 MHz" locked="false" accuracy=""/>
                   <clock_output id="PLLDIV1_CLK.outFreq" value="21 MHz" locked="false" accuracy=""/>
@@ -247,11 +258,6 @@
                <clock_settings>
                   <setting id="SCGMode" value="SPLL" locked="false"/>
                   <setting id="powerMode" value="HSRUN" locked="false"/>
-                  <setting id="PCC.PCC_ADC0_SEL.sel" value="SCG.PLLDIV2_CLK" locked="false"/>
-                  <setting id="PCC.PCC_ADC1_SEL.sel" value="SCG.PLLDIV2_CLK" locked="false"/>
-                  <setting id="PCC.PCC_FTM0_SEL.sel" value="SCG.SOSCDIV1_CLK" locked="false"/>
-                  <setting id="PCC.PCC_FTM2_SEL.sel" value="SCG.SOSCDIV1_CLK" locked="false"/>
-                  <setting id="PCC.PCC_FTM3_SEL.sel" value="SCG.PLLDIV1_CLK" locked="false"/>
                   <setting id="PCC.PCC_LPSPI0_SEL.sel" value="SCG.PLLDIV2_CLK" locked="false"/>
                   <setting id="PCC.PCC_LPSPI1_SEL.sel" value="SCG.PLLDIV2_CLK" locked="false"/>
                   <setting id="SCG.DIVBUS.scale" value="2" locked="false"/>
@@ -301,26 +307,6 @@
                   <data type="Version">2.0.3</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc12" description="ADC12 Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data type="Boolean">true</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc12" description="An unsupported version of the ADC12 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="equivalent">
-                  <data type="Version">2.0.1</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.pdb" description="PDB Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data type="Boolean">true</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.pdb" description="An unsupported version of the PDB Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="equivalent">
-                  <data type="Version">2.0.1</data>
-               </feature>
-            </dependency>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.edma" description="EDMA Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
@@ -329,11 +315,6 @@
             <dependency resourceType="SWComponent" resourceId="platform.drivers.edma" description="An unsupported version of the EDMA Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="greaterOrEqual">
                   <data type="Version">2.3.0</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="Tool" resourceId="Pins" description="The Pins tool is required by the Peripherals tool, but it is disabled." problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data>true</data>
                </feature>
             </dependency>
             <dependency resourceType="Tool" resourceId="Clocks" description="The Clocks tool is required by the Peripherals tool, but it is disabled." problem_level="2" source="Peripherals">
@@ -404,30 +385,6 @@
                         <data type="Version">2.0.2</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="PCC.PCC_ADC0_CLK" description="ADC0 clock is inactive." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="frequency" evaluation="greaterThan">
-                        <data type="Frequency" unit="Hz">0</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="Peripheral" resourceId="ADC0" description="At least one of ADC0 hardware triggers needs to be routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="routedUnifiedSignals" evaluation="includesAny">
-                        <data type="String">ADC0.adc_trigger_coco_flag.A</data>
-                        <data type="String">ADC0.adc_trigger_coco_flag.B</data>
-                        <data type="String">ADC0.adc_trigger.A</data>
-                        <data type="String">ADC0.adc_trigger.B</data>
-                        <data type="String">ADC0.adc_trigger.C</data>
-                        <data type="String">ADC0.adc_trigger.D</data>
-                        <data type="String">ADC0.adc_trigger.E</data>
-                        <data type="String">ADC0.adc_trigger.F</data>
-                        <data type="String">ADC0.adc_trigger.G</data>
-                        <data type="String">ADC0.adc_trigger.H</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.0" description="Signal SE, channel 0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="routed" evaluation="">
-                        <data type="Boolean">true</data>
-                     </feature>
-                  </dependency>
                   <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPSPI1.lpspi_sck" description="Signal serial clock is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
@@ -458,11 +415,6 @@
                         <data type="Version">2.0.2</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="System_clock" description="System clock is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="frequency" evaluation="greaterThan">
-                        <data type="Frequency" unit="Hz">0</data>
-                     </feature>
-                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The fsl_dmamux driver is missing in the project  (required for the eDMA)." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
@@ -481,7 +433,6 @@
                            <struct name="0"/>
                            <struct name="1"/>
                            <struct name="2"/>
-                           <struct name="3"/>
                         </array>
                         <array name="interrupts">
                            <struct name="0">
@@ -649,43 +600,6 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="ADC0" uuid="c8bd2575-3e83-45a4-8d8a-b0e6782ae997" type="adc12" type_id="adc12_5324d28dd0212c08055a9d9cd4317082" mode="ADC12" peripheral="ADC0" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
-                     <config_set name="fsl_adc12">
-                        <setting name="enable_irq" value="true"/>
-                        <struct name="adc_interrupt">
-                           <setting name="IRQn" value="ADC0_IRQn"/>
-                           <setting name="enable_interrrupt" value="enabled"/>
-                           <setting name="enable_priority" value="true"/>
-                           <setting name="priority" value="3"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
-                        <struct name="adc12_config">
-                           <setting name="referenceVoltageSource" value="kADC12_ReferenceVoltageSourceVref"/>
-                           <setting name="clockSource" value="kADC12_ClockSourceAlt0"/>
-                           <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
-                           <setting name="clockDivider" value="kADC12_ClockDivider1"/>
-                           <setting name="resolution" value="kADC12_Resolution12Bit"/>
-                           <setting name="sampleClockCount" value="20"/>
-                           <setting name="enableContinuousConversion" value="false"/>
-                        </struct>
-                        <struct name="adc12HardwareCompareConfig">
-                           <setting name="hardwareCompareModeEnable" value="false"/>
-                        </struct>
-                        <setting name="adc12_hardware_average_mode" value="kADC12_HardwareAverageCount4"/>
-                        <setting name="hardwareTrigger" value="true"/>
-                        <setting name="enableDMA" value="false"/>
-                        <setting name="doAutoCalibration" value="true"/>
-                        <setting name="offset" value="0"/>
-                        <setting name="gain" value="0"/>
-                        <array name="adc12_channels_config">
-                           <struct name="0">
-                              <setting name="channelName" value=""/>
-                              <setting name="channelNumber" value="SE.0"/>
-                              <setting name="enableInterruptOnConversionCompleted" value="true"/>
-                           </struct>
-                        </array>
-                     </config_set>
-                  </instance>
                   <instance name="LPSPI1" uuid="e6a0e38a-fe8d-4f84-b9fb-cfa99c40e1b1" type="lpspi" type_id="lpspi_6e21a1e0a09f0a012d683c4f91752db8" mode="freertos" peripheral="LPSPI1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
                      <config_set name="transfer">
                         <struct name="config">
@@ -730,54 +644,6 @@
                            <setting name="IRQn" value="LPSPI1_IRQn"/>
                            <setting name="enable_priority" value="true"/>
                            <setting name="priority" value="2"/>
-                        </struct>
-                     </config_set>
-                  </instance>
-                  <instance name="PDB1" uuid="0cbc8926-e58e-4fcc-8c35-79a28d784e16" type="pdb" type_id="pdb_32eb8756416d042c4a30e2cf9bd8fca4" mode="general" peripheral="PDB1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
-                     <config_set name="fsl_pdb">
-                        <struct name="clockConfig">
-                           <setting name="clockSource" value="BusInterfaceClock"/>
-                           <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
-                        </struct>
-                        <struct name="pdb_config">
-                           <setting name="loadValueMode" value="kPDB_LoadValueImmediately"/>
-                           <setting name="firstDivider" value="kPDB_PrescalerDivider1"/>
-                           <setting name="secondDivider" value="kPDB_DividerMultiplicationFactor1"/>
-                           <setting name="moduloValue_str" value="1680"/>
-                           <setting name="triggerInputSource" value="kPDB_TriggerInput0"/>
-                           <setting name="initSWtrigger" value="false"/>
-                           <setting name="enableContinuousMode" value="false"/>
-                        </struct>
-                        <array name="pdb_adc_triggering_config">
-                           <struct name="0">
-                              <setting name="pdb_adc_triggered_device" value="ADC0"/>
-                              <array name="pdb_adc_pretriggers_config">
-                                 <struct name="0">
-                                    <setting name="enable" value="true"/>
-                                    <setting name="outputSource" value="delayedTrigger"/>
-                                    <setting name="delayValue_str" value="1"/>
-                                 </struct>
-                              </array>
-                           </struct>
-                        </array>
-                        <array name="pdb_dac_triggering_config"/>
-                        <array name="pdb_pulse_out_config"/>
-                        <struct name="pdb_delay_interrupt_config">
-                           <setting name="actionAfterDelay" value="noAction"/>
-                           <setting name="delayValue_str" value=""/>
-                        </struct>
-                        <struct name="pdb_interrupts_config">
-                           <set name="interrupt_sel">
-                              <selected/>
-                           </set>
-                           <setting name="enable_irq" value="false"/>
-                           <struct name="interrupt">
-                              <setting name="IRQn" value="PDB1_IRQn"/>
-                              <setting name="enable_interrrupt" value="enabled"/>
-                              <setting name="enable_priority" value="false"/>
-                              <setting name="priority" value="0"/>
-                              <setting name="enable_custom_name" value="false"/>
-                           </struct>
                         </struct>
                      </config_set>
                   </instance>

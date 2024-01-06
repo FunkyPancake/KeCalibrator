@@ -149,7 +149,6 @@ instance:
       - 0: []
       - 1: []
       - 2: []
-      - 3: []
     - interrupts:
       - 0:
         - channelId: 'PDB1_IRQn'
@@ -376,88 +375,6 @@ static void LPSPI0_init(void) {
 }
 
 /***********************************************************************************************************************
- * ADC0 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'ADC0'
-- type: 'adc12'
-- mode: 'ADC12'
-- custom_name_enabled: 'false'
-- type_id: 'adc12_5324d28dd0212c08055a9d9cd4317082'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'ADC0'
-- config_sets:
-  - fsl_adc12:
-    - enable_irq: 'true'
-    - adc_interrupt:
-      - IRQn: 'ADC0_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'true'
-      - priority: '3'
-      - enable_custom_name: 'false'
-    - adc12_config:
-      - referenceVoltageSource: 'kADC12_ReferenceVoltageSourceVref'
-      - clockSource: 'kADC12_ClockSourceAlt0'
-      - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - clockDivider: 'kADC12_ClockDivider1'
-      - resolution: 'kADC12_Resolution12Bit'
-      - sampleClockCount: '20'
-      - enableContinuousConversion: 'false'
-    - adc12HardwareCompareConfig:
-      - hardwareCompareModeEnable: 'false'
-    - adc12_hardware_average_mode: 'kADC12_HardwareAverageCount4'
-    - hardwareTrigger: 'true'
-    - enableDMA: 'false'
-    - doAutoCalibration: 'true'
-    - offset: '0'
-    - gain: '0'
-    - adc12_channels_config:
-      - 0:
-        - channelName: ''
-        - channelNumber: 'SE.0'
-        - enableInterruptOnConversionCompleted: 'true'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const adc12_config_t ADC0_config = {
-  .referenceVoltageSource = kADC12_ReferenceVoltageSourceVref,
-  .clockSource = kADC12_ClockSourceAlt0,
-  .clockDivider = kADC12_ClockDivider1,
-  .resolution = kADC12_Resolution12Bit,
-  .sampleClockCount = 20UL,
-  .enableContinuousConversion = false
-};
-adc12_channel_config_t ADC0_channelsConfig[1] = {
-  {
-    .channelNumber = 0U,
-    .enableInterruptOnConversionCompleted = true
-  }
-};
-const adc12_hardware_average_mode_t ADC0_hardwareAverageConfig = kADC12_HardwareAverageCount4;
-
-static void ADC0_init(void) {
-  /* Initialize ADC12 converter */
-  ADC12_Init(ADC0_PERIPHERAL, &ADC0_config);
-  /* Set to hardware trigger mode */
-  ADC12_EnableHardwareTrigger(ADC0_PERIPHERAL, true);
-  /* Configure hardware average mode */
-  ADC12_SetHardwareAverage(ADC0_PERIPHERAL, ADC0_hardwareAverageConfig);
-  /* Set the offset value for the conversion result */
-  ADC12_SetOffsetValue(ADC0_PERIPHERAL, (uint32_t) 0);
-  /* Set the gain value for the conversion result */
-  ADC12_SetGainValue(ADC0_PERIPHERAL, 0);
-  /* Perform auto calibration */
-  ADC12_DoAutoCalibration(ADC0_PERIPHERAL);
-  /* Enable generating the DMA trigger when conversion is completed */
-  ADC12_EnableDMA(ADC0_PERIPHERAL, false);
-  /* Interrupt vector ADC0_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(ADC0_IRQN, ADC0_IRQ_PRIORITY);
-  /* Enable interrupt ADC0_IRQn request in the NVIC. */
-  EnableIRQ(ADC0_IRQN);
-}
-
-/***********************************************************************************************************************
  * LPSPI1 initialization code
  **********************************************************************************************************************/
 /* clang-format off */
@@ -531,86 +448,6 @@ static void LPSPI1_init(void) {
 }
 
 /***********************************************************************************************************************
- * PDB1 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'PDB1'
-- type: 'pdb'
-- mode: 'general'
-- custom_name_enabled: 'false'
-- type_id: 'pdb_32eb8756416d042c4a30e2cf9bd8fca4'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'PDB1'
-- config_sets:
-  - fsl_pdb:
-    - clockConfig:
-      - clockSource: 'BusInterfaceClock'
-      - clockSourceFreq: 'ClocksTool_DefaultInit'
-    - pdb_config:
-      - loadValueMode: 'kPDB_LoadValueImmediately'
-      - firstDivider: 'kPDB_PrescalerDivider1'
-      - secondDivider: 'kPDB_DividerMultiplicationFactor1'
-      - moduloValue_str: '1680'
-      - triggerInputSource: 'kPDB_TriggerInput0'
-      - initSWtrigger: 'false'
-      - enableContinuousMode: 'false'
-    - pdb_adc_triggering_config:
-      - 0:
-        - pdb_adc_triggered_device: 'ADC0'
-        - pdb_adc_pretriggers_config:
-          - 0:
-            - enable: 'true'
-            - outputSource: 'delayedTrigger'
-            - delayValue_str: '1'
-    - pdb_dac_triggering_config: []
-    - pdb_pulse_out_config: []
-    - pdb_delay_interrupt_config:
-      - actionAfterDelay: 'noAction'
-      - delayValue_str: ''
-    - pdb_interrupts_config:
-      - interrupt_sel: ''
-      - enable_irq: 'false'
-      - interrupt:
-        - IRQn: 'PDB1_IRQn'
-        - enable_interrrupt: 'enabled'
-        - enable_priority: 'false'
-        - priority: '0'
-        - enable_custom_name: 'false'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-/* PDB counter configuration */
-const pdb_config_t PDB1_config = {
-  .loadValueMode = kPDB_LoadValueImmediately,
-  .prescalerDivider = kPDB_PrescalerDivider1,
-  .dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1,
-  .triggerInputSource = kPDB_TriggerInput0,
-  .enableContinuousMode = false
-};
-/* PDB ADC0 pre-triggers configuration */
-pdb_adc_pretrigger_config_t PDB1_ADC0_pretriggers_config = {
-  .enablePreTriggerMask = 0U | (1U << kPDB_ADCPreTrigger0),
-  .enableOutputMask = 0U | (1U << kPDB_ADCPreTrigger0),
-  .enableBackToBackOperationMask = 0U
-};
-const uint32_t PDB1_ADC0_pretriggers_value[PDB1_ADC0_PRETRIGGERS_COUNT] = {
-  1U
-};
-
-static void PDB1_init(void) {
-  /* PDB counter initialization */
-  PDB_Init(PDB1_PERIPHERAL, &PDB1_config);
-  /* PDB counter modulo initialization */
-  PDB_SetModulusValue(PDB1_PERIPHERAL, 1680U);
-  /* PDB ADC0 pre-triggers initialization */
-  PDB_SetADCPreTriggerConfig(PDB1_PERIPHERAL, kPDB_ADCTriggerChannel0, &PDB1_ADC0_pretriggers_config);
-  PDB_SetADCPreTriggerDelayValue(PDB1_PERIPHERAL, kPDB_ADCTriggerChannel0, kPDB_ADCPreTrigger0, PDB1_ADC0_pretriggers_value[PDB1_ADC0_PT0]);
-  /* Load buffered registers values into the working register for the first time */
-  PDB_DoLoadValues(PDB1_PERIPHERAL);
-}
-
-/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 static void BOARD_InitPeripherals_CommonPostInit(void)
@@ -631,9 +468,7 @@ void BOARD_InitPeripherals(void)
   DMA_init();
   CAN0_init();
   LPSPI0_init();
-  ADC0_init();
   LPSPI1_init();
-  PDB1_init();
   /* Common post-initialization */
   BOARD_InitPeripherals_CommonPostInit();
 }

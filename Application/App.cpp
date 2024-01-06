@@ -39,7 +39,7 @@ constexpr UBaseType_t app_task_PRIORITY = (configMAX_PRIORITIES - 1);
 
     while (true)
     {
-        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(100));
+        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(10));
         can->RxTask();
         calibrator->MainFunction();
         can->TxTask();

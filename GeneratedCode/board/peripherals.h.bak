@@ -16,7 +16,6 @@
 #include "fsl_clock.h"
 #include "fsl_lpspi.h"
 #include "fsl_lpspi_freertos.h"
-#include "fsl_ftm.h"
 #include "fsl_adc12.h"
 #include "fsl_pdb.h"
 
@@ -57,34 +56,14 @@ extern "C" {
 #define LPSPI0_IRQN LPSPI0_IRQn
 /* LPSPI0 interrupt vector priority. */
 #define LPSPI0_IRQ_PRIORITY 5
-/* Definition of peripheral ID */
-#define FTM3_PERIPHERAL FTM3
-/* Definition of the clock source frequency */
-#define FTM3_CLOCK_SOURCE 21000000UL
-/* Definition of the clock source frequency */
-#define FTM3_TIMER_MODULO_VALUE 1049
-/* Definition of FTM3 channel number 2 */
-#define FTM3_PHASE_V_CHANNEL kFTM_Chnl_2
-/* Definition of FTM3 channel number 3 */
-#define FTM3_PHASE_W_CHANNEL kFTM_Chnl_3
-/* Definition of FTM3 channel number 7 */
-#define FTM3_PHASE_U_CHANNEL kFTM_Chnl_7
-/* Definition of peripheral ID */
-#define CAN1_PERIPHERAL CAN1
-/* Definition of the clock source frequency */
-#define CAN1_CLOCK_SOURCE 84000000UL
-/* Definition of peripheral ID */
-#define FTM2_PERIPHERAL FTM2
-/* Definition of the clock source frequency */
-#define FTM2_CLOCK_SOURCE 12000000UL
-/* Alias for ADC1 peripheral */
-#define ADC1_PERIPHERAL ADC1
-/* ADC1 interrupt vector ID (number). */
-#define ADC1_IRQN ADC1_IRQn
-/* ADC1 interrupt vector priority. */
-#define ADC1_IRQ_PRIORITY 3
-/* ADC1 interrupt handler identifier. */
-#define ADC1_IRQHANDLER ADC1_IRQHandler
+/* Alias for ADC0 peripheral */
+#define ADC0_PERIPHERAL ADC0
+/* ADC0 interrupt vector ID (number). */
+#define ADC0_IRQN ADC0_IRQn
+/* ADC0 interrupt vector priority. */
+#define ADC0_IRQ_PRIORITY 3
+/* ADC0 interrupt handler identifier. */
+#define ADC0_IRQHANDLER ADC0_IRQHandler
 /* BOARD_InitPeripherals defines for LPSPI1 */
 /* Definition of peripheral ID */
 #define LPSPI1_PERIPHERAL LPSPI1
@@ -94,12 +73,6 @@ extern "C" {
 #define LPSPI1_IRQN LPSPI1_IRQn
 /* LPSPI1 interrupt vector priority. */
 #define LPSPI1_IRQ_PRIORITY 2
-/* Definition of peripheral ID */
-#define FTM0_PERIPHERAL FTM0
-/* Definition of the clock source frequency */
-#define FTM0_CLOCK_SOURCE 12000000UL
-/* Definition of the clock source frequency */
-#define FTM0_TIMER_MODULO_VALUE 65535
 /* BOARD_InitPeripherals defines for PDB1 */
 /* Definition of peripheral ID */
 #define PDB1_PERIPHERAL PDB1
@@ -125,18 +98,11 @@ extern const flexcan_rx_mb_config_t CAN0_rx_mb_config_0;
 extern flexcan_rx_fifo_config_t CAN0_rx_fifo_config;
 extern const lpspi_master_config_t LPSPI0_config;
 extern lpspi_rtos_handle_t LPSPI0_handle;
-extern const ftm_config_t FTM3_config;
-extern const flexcan_config_t CAN1_config;
-/* Message buffer 0 configuration structure */
-extern const flexcan_rx_mb_config_t CAN1_rx_mb_config_0;
-extern flexcan_rx_fifo_config_t CAN1_rx_fifo_config;
-extern const ftm_config_t FTM2_config;
-extern const adc12_config_t ADC1_config;
-extern adc12_channel_config_t ADC1_channelsConfig[1];
-extern const adc12_hardware_average_mode_t ADC1_hardwareAverageConfig;
+extern const adc12_config_t ADC0_config;
+extern adc12_channel_config_t ADC0_channelsConfig[1];
+extern const adc12_hardware_average_mode_t ADC0_hardwareAverageConfig;
 extern const lpspi_master_config_t LPSPI1_config;
 extern lpspi_rtos_handle_t LPSPI1_handle;
-extern const ftm_config_t FTM0_config;
 extern const pdb_config_t PDB1_config;
 extern pdb_adc_pretrigger_config_t PDB1_ADC0_pretriggers_config;
 extern const uint32_t PDB1_ADC0_pretriggers_value[PDB1_ADC0_PRETRIGGERS_COUNT];

@@ -376,385 +376,23 @@ static void LPSPI0_init(void) {
 }
 
 /***********************************************************************************************************************
- * FTM3 initialization code
+ * ADC0 initialization code
  **********************************************************************************************************************/
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 instance:
-- name: 'FTM3'
-- type: 'ftm'
-- mode: 'CenterAligned'
-- custom_name_enabled: 'false'
-- type_id: 'ftm_cf73470dab578a761c1bb272554a7d11'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'FTM3'
-- config_sets:
-  - ftm_main_config:
-    - ftm_config:
-      - clockSource: 'kFTM_FixedClock'
-      - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - timerPrescaler: '1'
-      - timerOutputFrequency: '10kHz'
-      - systemClockSource: 'BusInterfaceClock'
-      - systemClockSourceFreq: 'ClocksTool_DefaultInit'
-      - faultMode: 'kFTM_Fault_Disable'
-      - inputFilterPeriod: '1'
-      - faultInputs:
-        - 0:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 1:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 2:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 3:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-      - deadTimePrescale: 'kFTM_Deadtime_Prescale_1'
-      - deadTimePeriod: '1'
-      - pwmSyncMode: 'kFTM_SoftwareTrigger'
-      - reloadPoints: 'kFTM_CntMax'
-      - extTriggers: 'kFTM_InitTrigger'
-      - chnlInitState: ''
-      - chnlPolarity: ''
-      - bdmMode: 'kFTM_BdmMode_3'
-      - useGlobalTimeBase: 'false'
-    - timer_interrupts: ''
-    - enable_irq: 'false'
-    - ftm_interrupt:
-      - IRQn: 'FTM3_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'true'
-      - priority: '1'
-      - enable_custom_name: 'false'
-    - EnableTimerInInit: 'false'
-  - ftm_center_aligned_mode:
-    - ftm_center_aligned_channels_config:
-      - 0:
-        - channelId: 'PHASE_V'
-        - chnlNumber: 'kFTM_Chnl_2'
-        - level: 'kFTM_HighTrue'
-        - dutyValueStr: '0'
-        - enable_chan_irq: 'false'
-      - 1:
-        - channelId: 'PHASE_W'
-        - chnlNumber: 'kFTM_Chnl_3'
-        - level: 'kFTM_HighTrue'
-        - dutyValueStr: '0'
-        - enable_chan_irq: 'false'
-      - 2:
-        - channelId: 'PHASE_U'
-        - chnlNumber: 'kFTM_Chnl_7'
-        - level: 'kFTM_HighTrue'
-        - dutyValueStr: '0'
-        - enable_chan_irq: 'false'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const ftm_config_t FTM3_config = {
-  .prescale = kFTM_Prescale_Divide_1,
-  .faultMode = kFTM_Fault_Disable,
-  .faultFilterValue = 0,
-  .deadTimePrescale = kFTM_Deadtime_Prescale_1,
-  .deadTimeValue = 1,
-  .pwmSyncMode = kFTM_SoftwareTrigger,
-  .reloadPoints = kFTM_CntMax,
-  .extTriggers = kFTM_InitTrigger,
-  .chnlInitState = 0,
-  .chnlPolarity = 0,
-  .bdmMode = kFTM_BdmMode_3,
-  .useGlobalTimeBase = false
-};
-const ftm_chnl_pwm_config_param_t FTM3_centerPwmSignalParams[] = { 
-  {
-    .chnlNumber = kFTM_Chnl_2,
-    .level = kFTM_HighTrue,
-    .dutyValue = 0,
-  },
-  {
-    .chnlNumber = kFTM_Chnl_3,
-    .level = kFTM_HighTrue,
-    .dutyValue = 0,
-  },
-  {
-    .chnlNumber = kFTM_Chnl_7,
-    .level = kFTM_HighTrue,
-    .dutyValue = 0,
-  }
-};
-
-static void FTM3_init(void) {
-  FTM_Init(FTM3_PERIPHERAL, &FTM3_config);
-  FTM_SetTimerPeriod(FTM3_PERIPHERAL, FTM3_TIMER_MODULO_VALUE);
-  FTM_SetupPwmMode(FTM3_PERIPHERAL, FTM3_centerPwmSignalParams, sizeof(FTM3_centerPwmSignalParams) / sizeof(ftm_chnl_pwm_config_param_t), kFTM_CenterAlignedPwm);
-}
-
-/***********************************************************************************************************************
- * CAN1 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'CAN1'
-- type: 'flexcan'
-- mode: 'interrupts'
-- custom_name_enabled: 'false'
-- type_id: 'flexcan_477f6be3462ee2961b67c0825ef495e2'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'CAN1'
-- config_sets:
-  - interruptsCfg:
-    - messageBufferIrqs: '0'
-    - interruptsEnable: ''
-    - enable_ored_mb_irq: 'false'
-    - interrupt_ored_mb:
-      - IRQn: 'CAN1_ORed_Message_buffer_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'true'
-      - priority: '1'
-      - enable_custom_name: 'false'
-    - enable_busoff_irq: 'false'
-    - interrupt_busoff:
-      - IRQn: 'CAN1_ORed_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
-    - enable_error_irq: 'false'
-    - interrupt_error:
-      - IRQn: 'CAN1_Error_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
-    - enable_tx_irq: 'false'
-    - interrupt_tx:
-      - IRQn: 'CAN1_ORed_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
-    - enable_rx_irq: 'false'
-    - interrupt_rx:
-      - IRQn: 'CAN1_ORed_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
-    - enable_wakeup_irq: 'false'
-    - interrupt_wakeup:
-      - IRQn: 'CAN1_Wake_Up_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
-  - fsl_flexcan:
-    - can_config:
-      - clockSource: 'kFLEXCAN_ClkSrcPeri'
-      - clockSourceFreq: 'BOARD_BootClockRUN'
-      - wakeupSrc: 'kFLEXCAN_WakeupSrcUnfiltered'
-      - baudRate: '500000'
-      - maxMbNum: '16'
-      - enableLoopBack: 'false'
-      - enableTimerSync: 'true'
-      - enableSelfWakeup: 'false'
-      - enableIndividMask: 'false'
-      - disableSelfReception: 'false'
-      - enableListenOnlyMode: 'false'
-      - timingConfig:
-        - propSeg: '7'
-        - phaseSeg1: '4'
-        - phaseSeg2: '2'
-        - rJumpwidth: '2'
-        - bitTime: []
-    - enableRxFIFO: 'false'
-    - rxFIFO:
-      - idFilterTable: ''
-      - idFilterNum: 'num0'
-      - idFilterType: 'kFLEXCAN_RxFifoFilterTypeA'
-      - priority: 'kFLEXCAN_RxFifoPrioLow'
-    - channels:
-      - 0:
-        - mbID: '0'
-        - mbType: 'mbRx'
-        - rxMb:
-          - id: '0'
-          - format: 'kFLEXCAN_FrameFormatStandard'
-          - type: 'kFLEXCAN_FrameTypeData'
-      - 1:
-        - mbID: '1'
-        - mbType: 'mbTx'
-        - rxMb:
-          - id: '0'
-          - format: 'kFLEXCAN_FrameFormatStandard'
-          - type: 'kFLEXCAN_FrameTypeData'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const flexcan_config_t CAN1_config = {
-  .clkSrc = kFLEXCAN_ClkSrc1,
-  .wakeupSrc = kFLEXCAN_WakeupSrcUnfiltered,
-  .baudRate = 500000UL,
-  .maxMbNum = 16U,
-  .enableLoopBack = false,
-  .enableTimerSync = true,
-  .enableSelfWakeup = false,
-  .enableIndividMask = false,
-  .disableSelfReception = false,
-  .enableListenOnlyMode = false,
-  .timingConfig = {
-    .preDivider = 11,
-    .propSeg = 6,
-    .phaseSeg1 = 3,
-    .phaseSeg2 = 1,
-    .rJumpwidth = 1
-  }
-};
-/* Message buffer 0 configuration structure */
-const flexcan_rx_mb_config_t CAN1_rx_mb_config_0 = {
-  .id = FLEXCAN_ID_STD(0UL),
-  .format = kFLEXCAN_FrameFormatStandard,
-  .type = kFLEXCAN_FrameTypeData
-};
-
-static void CAN1_init(void) {
-  FLEXCAN_Init(CAN1_PERIPHERAL, &CAN1_config, CAN1_CLOCK_SOURCE);
-
-  /* Message buffer 0 initialization */
-  FLEXCAN_SetRxMbConfig(CAN1_PERIPHERAL, 0, &CAN1_rx_mb_config_0, true);
-  /* Message buffer 1 initialization */
-  FLEXCAN_SetTxMbConfig(CAN1_PERIPHERAL, 1, true);
-}
-
-/***********************************************************************************************************************
- * FTM2 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'FTM2'
-- type: 'ftm'
-- mode: 'QuadratureDecoder'
-- custom_name_enabled: 'false'
-- type_id: 'ftm_cf73470dab578a761c1bb272554a7d11'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'FTM2'
-- config_sets:
-  - ftm_main_config:
-    - ftm_config:
-      - clockSource: 'kFTM_FixedClock'
-      - clockSourceFreq: 'BOARD_BootClockRUN'
-      - timerPrescaler: '1'
-      - systemClockSource: 'BusInterfaceClock'
-      - systemClockSourceFreq: 'BOARD_BootClockRUN'
-      - faultMode: 'kFTM_Fault_Disable'
-      - inputFilterPeriod: '1'
-      - faultInputs:
-        - 0:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 1:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 2:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 3:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-      - deadTimePrescale: 'kFTM_Deadtime_Prescale_1'
-      - deadTimePeriod: '0'
-      - pwmSyncMode: 'kFTM_SoftwareTrigger'
-      - reloadPoints: ''
-      - extTriggers: ''
-      - chnlInitState: ''
-      - chnlPolarity: ''
-      - bdmMode: 'kFTM_BdmMode_0'
-      - useGlobalTimeBase: 'false'
-    - timer_interrupts: ''
-    - enable_irq: 'false'
-    - ftm_interrupt:
-      - IRQn: 'FTM0_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
-    - EnableTimerInInit: 'true'
-  - ftm_quadrature_decoder_mode:
-    - timerModuloVal: '0xFFFF'
-    - timerInitVal: '0'
-    - ftm_quad_decoder_mode: 'kFTM_QuadPhaseEncode'
-    - ftm_phase_a_params:
-      - enablePhaseFilter: 'true'
-      - phaseFilterPeriod: '1'
-      - phasePolarity: 'kFTM_QuadPhaseNormal'
-    - ftm_phase_b_params:
-      - enablePhaseFilter: 'true'
-      - phaseFilterPeriod: '1'
-      - phasePolarity: 'kFTM_QuadPhaseNormal'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const ftm_config_t FTM2_config = {
-  .prescale = kFTM_Prescale_Divide_1,
-  .faultMode = kFTM_Fault_Disable,
-  .faultFilterValue = 0,
-  .deadTimePrescale = kFTM_Deadtime_Prescale_1,
-  .deadTimeValue = 0,
-  .pwmSyncMode = kFTM_SoftwareTrigger,
-  .reloadPoints = 0,
-  .extTriggers = 0,
-  .chnlInitState = 0,
-  .chnlPolarity = 0,
-  .bdmMode = kFTM_BdmMode_0,
-  .useGlobalTimeBase = false
-};
-const ftm_phase_params_t FTM2_phaseAParams = { 
-  .enablePhaseFilter = true,
-  .phaseFilterVal = 0,
-  .phasePolarity = kFTM_QuadPhaseNormal
-
-};
-const ftm_phase_params_t FTM2_phaseBParams = { 
-  .enablePhaseFilter = true,
-  .phaseFilterVal = 0,
-  .phasePolarity = kFTM_QuadPhaseNormal
-
-};
-
-static void FTM2_init(void) {
-  FTM_Init(FTM2_PERIPHERAL, &FTM2_config);
-/* Initialization of the timer initial value and modulo value */
-  FTM_SetQuadDecoderModuloValue(FTM2_PERIPHERAL, 0,65535);
-  FTM_SetupQuadDecode(FTM2_PERIPHERAL, &FTM2_phaseAParams, &FTM2_phaseBParams, kFTM_QuadPhaseEncode);
-  FTM_StartTimer(FTM2_PERIPHERAL, kFTM_FixedClock);
-}
-
-/***********************************************************************************************************************
- * ADC1 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'ADC1'
+- name: 'ADC0'
 - type: 'adc12'
 - mode: 'ADC12'
 - custom_name_enabled: 'false'
 - type_id: 'adc12_5324d28dd0212c08055a9d9cd4317082'
 - functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'ADC1'
+- peripheral: 'ADC0'
 - config_sets:
   - fsl_adc12:
     - enable_irq: 'true'
     - adc_interrupt:
-      - IRQn: 'ADC1_IRQn'
+      - IRQn: 'ADC0_IRQn'
       - enable_interrrupt: 'enabled'
       - enable_priority: 'true'
       - priority: '3'
@@ -778,11 +416,11 @@ instance:
     - adc12_channels_config:
       - 0:
         - channelName: ''
-        - channelNumber: 'SE.10'
+        - channelNumber: 'SE.0'
         - enableInterruptOnConversionCompleted: 'true'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-const adc12_config_t ADC1_config = {
+const adc12_config_t ADC0_config = {
   .referenceVoltageSource = kADC12_ReferenceVoltageSourceVref,
   .clockSource = kADC12_ClockSourceAlt0,
   .clockDivider = kADC12_ClockDivider1,
@@ -790,33 +428,33 @@ const adc12_config_t ADC1_config = {
   .sampleClockCount = 20UL,
   .enableContinuousConversion = false
 };
-adc12_channel_config_t ADC1_channelsConfig[1] = {
+adc12_channel_config_t ADC0_channelsConfig[1] = {
   {
-    .channelNumber = 10U,
+    .channelNumber = 0U,
     .enableInterruptOnConversionCompleted = true
   }
 };
-const adc12_hardware_average_mode_t ADC1_hardwareAverageConfig = kADC12_HardwareAverageCount4;
+const adc12_hardware_average_mode_t ADC0_hardwareAverageConfig = kADC12_HardwareAverageCount4;
 
-static void ADC1_init(void) {
+static void ADC0_init(void) {
   /* Initialize ADC12 converter */
-  ADC12_Init(ADC1_PERIPHERAL, &ADC1_config);
+  ADC12_Init(ADC0_PERIPHERAL, &ADC0_config);
   /* Set to hardware trigger mode */
-  ADC12_EnableHardwareTrigger(ADC1_PERIPHERAL, true);
+  ADC12_EnableHardwareTrigger(ADC0_PERIPHERAL, true);
   /* Configure hardware average mode */
-  ADC12_SetHardwareAverage(ADC1_PERIPHERAL, ADC1_hardwareAverageConfig);
+  ADC12_SetHardwareAverage(ADC0_PERIPHERAL, ADC0_hardwareAverageConfig);
   /* Set the offset value for the conversion result */
-  ADC12_SetOffsetValue(ADC1_PERIPHERAL, (uint32_t) 0);
+  ADC12_SetOffsetValue(ADC0_PERIPHERAL, (uint32_t) 0);
   /* Set the gain value for the conversion result */
-  ADC12_SetGainValue(ADC1_PERIPHERAL, 0);
+  ADC12_SetGainValue(ADC0_PERIPHERAL, 0);
   /* Perform auto calibration */
-  ADC12_DoAutoCalibration(ADC1_PERIPHERAL);
+  ADC12_DoAutoCalibration(ADC0_PERIPHERAL);
   /* Enable generating the DMA trigger when conversion is completed */
-  ADC12_EnableDMA(ADC1_PERIPHERAL, false);
-  /* Interrupt vector ADC1_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(ADC1_IRQN, ADC1_IRQ_PRIORITY);
-  /* Enable interrupt ADC1_IRQn request in the NVIC. */
-  EnableIRQ(ADC1_IRQN);
+  ADC12_EnableDMA(ADC0_PERIPHERAL, false);
+  /* Interrupt vector ADC0_IRQn priority settings in the NVIC. */
+  NVIC_SetPriority(ADC0_IRQN, ADC0_IRQ_PRIORITY);
+  /* Enable interrupt ADC0_IRQn request in the NVIC. */
+  EnableIRQ(ADC0_IRQN);
 }
 
 /***********************************************************************************************************************
@@ -890,109 +528,6 @@ static void LPSPI1_init(void) {
   /* Interrupt vector LPSPI1_IRQn priority settings in the NVIC. */
   NVIC_SetPriority(LPSPI1_IRQN, LPSPI1_IRQ_PRIORITY);
   LPSPI_RTOS_Init(&LPSPI1_handle, LPSPI1_PERIPHERAL, &LPSPI1_config, LPSPI1_CLOCK_FREQ);
-}
-
-/***********************************************************************************************************************
- * FTM0 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'FTM0'
-- type: 'ftm'
-- mode: 'EdgeAligned'
-- custom_name_enabled: 'false'
-- type_id: 'ftm_cf73470dab578a761c1bb272554a7d11'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'FTM0'
-- config_sets:
-  - ftm_main_config:
-    - ftm_config:
-      - clockSource: 'kFTM_FixedClock'
-      - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - timerPrescaler: '128'
-      - timerOutputFrequency: '65536'
-      - systemClockSource: 'BusInterfaceClock'
-      - systemClockSourceFreq: 'ClocksTool_DefaultInit'
-      - faultMode: 'kFTM_Fault_Disable'
-      - inputFilterPeriod: '1'
-      - faultInputs:
-        - 0:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 1:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 2:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-        - 3:
-          - enableFaultInput: 'false'
-          - faultLevelVal: 'low'
-          - useFaultFilter: 'false'
-      - deadTimePrescale: 'kFTM_Deadtime_Prescale_1'
-      - deadTimePeriod: '0'
-      - pwmSyncMode: 'kFTM_SoftwareTrigger'
-      - reloadPoints: ''
-      - extTriggers: ''
-      - chnlInitState: ''
-      - chnlPolarity: ''
-      - bdmMode: 'kFTM_BdmMode_0'
-      - useGlobalTimeBase: 'false'
-    - timer_interrupts: ''
-    - enable_irq: 'false'
-    - ftm_interrupt:
-      - IRQn: 'FTM1_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
-    - EnableTimerInInit: 'true'
-  - ftm_edge_aligned_mode:
-    - ftm_edge_aligned_channels_config:
-      - 0:
-        - channelId: ''
-        - edge_aligned_mode: 'kFTM_DualEdgeCapture'
-        - dual_edge_capture:
-          - chnNumber: 'kFTM_Chnl_0'
-          - dual_edge_capture_param:
-            - mode: 'kFTM_Continuous'
-            - currChanEdgeMode: 'kFTM_FallingEdge'
-            - nextChanEdgeMode: 'kFTM_FallingEdge'
-          - inputFilterPeriod: '1'
-          - enable_chan_irq: 'false'
-          - enable_chan1_irq: 'false'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const ftm_config_t FTM0_config = {
-  .prescale = kFTM_Prescale_Divide_128,
-  .faultMode = kFTM_Fault_Disable,
-  .faultFilterValue = 0,
-  .deadTimePrescale = kFTM_Deadtime_Prescale_1,
-  .deadTimeValue = 0,
-  .pwmSyncMode = kFTM_SoftwareTrigger,
-  .reloadPoints = 0,
-  .extTriggers = 0,
-  .chnlInitState = 0,
-  .chnlPolarity = 0,
-  .bdmMode = kFTM_BdmMode_0,
-  .useGlobalTimeBase = false
-};
-const ftm_dual_edge_capture_param_t FTM0_channel0 = {
-  .mode = kFTM_Continuous,
-  .currChanEdgeMode = kFTM_FallingEdge,
-  .nextChanEdgeMode = kFTM_FallingEdge
-};
-
-
-static void FTM0_init(void) {
-  FTM_Init(FTM0_PERIPHERAL, &FTM0_config);
-  FTM_SetTimerPeriod(FTM0_PERIPHERAL, FTM0_TIMER_MODULO_VALUE);
-  FTM_SetupDualEdgeCapture(FTM0_PERIPHERAL, kFTM_Chnl_0, &FTM0_channel0, 0);
-  FTM_StartTimer(FTM0_PERIPHERAL, kFTM_FixedClock);
 }
 
 /***********************************************************************************************************************
@@ -1096,12 +631,8 @@ void BOARD_InitPeripherals(void)
   DMA_init();
   CAN0_init();
   LPSPI0_init();
-  FTM3_init();
-  CAN1_init();
-  FTM2_init();
-  ADC1_init();
+  ADC0_init();
   LPSPI1_init();
-  FTM0_init();
   PDB1_init();
   /* Common post-initialization */
   BOARD_InitPeripherals_CommonPostInit();
