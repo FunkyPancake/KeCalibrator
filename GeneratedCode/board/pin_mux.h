@@ -86,6 +86,71 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_ENC_A_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
                                                       /* @} */
 
+/*! @name PORTC0 (number 26), MUX_A
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_MUX_A_GPIO GPIOC               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MUX_A_GPIO_PIN_MASK (1U << 0U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_MUX_A_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_MUX_A_PIN 0U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_MUX_A_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
+                                                      /* @} */
+
+/*! @name PORTC17 (number 27), MUX_B
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_MUX_B_GPIO GPIOC                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MUX_B_GPIO_PIN_MASK (1U << 17U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_MUX_B_PORT PORTC                /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_MUX_B_PIN 17U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_MUX_B_PIN_MASK (1U << 17U)      /*!<@brief PORT pin mask */
+                                                       /* @} */
+
+/*! @name PORTC16 (number 28), MUX_C
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_MUX_C_GPIO GPIOC                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_MUX_C_GPIO_PIN_MASK (1U << 16U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_MUX_C_PORT PORTC                /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_MUX_C_PIN 16U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_MUX_C_PIN_MASK (1U << 16U)      /*!<@brief PORT pin mask */
+                                                       /* @} */
+
+/*! @name PORTC15 (number 29), LED_IP
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_LED_IP_GPIO GPIOC                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED_IP_GPIO_PIN_MASK (1U << 15U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_LED_IP_PORT PORTC                /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_LED_IP_PIN 15U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_LED_IP_PIN_MASK (1U << 15U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
+
+/*! @name PORTC14 (number 30), LED_DONE
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_LED_DONE_GPIO GPIOC                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED_DONE_GPIO_PIN_MASK (1U << 14U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_LED_DONE_PORT PORTC                /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_LED_DONE_PIN 14U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_LED_DONE_PIN_MASK (1U << 14U)      /*!<@brief PORT pin mask */
+                                                          /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *

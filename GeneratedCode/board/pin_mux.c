@@ -30,6 +30,11 @@ pin_labels:
 - {pin_num: '25', pin_signal: ADC0_SE9/ACMP1_IN3/PTC1/FTM0_CH1/FTM1_CH7, label: SPEED_TIM, identifier: SPEED_TIM}
 - {pin_num: '60', pin_signal: ADC2_SE7/PTE0/LPSPI0_SCK/TCLK1/LPI2C1_SDA/FTM1_FLT2, label: TLE_RST, identifier: TLE_RST}
 - {pin_num: '15', pin_signal: ACMP2_IN1/PTD15/FTM0_CH0, label: SPD, identifier: SPD}
+- {pin_num: '26', pin_signal: ADC0_SE8/ACMP1_IN4/PTC0/FTM0_CH0/FTM1_CH6, label: MUX_A, identifier: MUX_A}
+- {pin_num: '27', pin_signal: ADC0_SE15/PTC17/FTM1_FLT3/LPI2C1_SCLS, label: MUX_B, identifier: MUX_B}
+- {pin_num: '28', pin_signal: ADC0_SE14/PTC16/FTM1_FLT2/LPI2C1_SDAS, label: MUX_C, identifier: MUX_C}
+- {pin_num: '29', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3, label: LED_IP, identifier: LED_IP}
+- {pin_num: '30', pin_signal: ADC0_SE12/ACMP2_IN5/PTC14/FTM1_CH2, label: LED_DONE, identifier: LED_DONE}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -77,6 +82,11 @@ BOARD_InitPins:
   - {pin_num: '3', peripheral: GPIOE, signal: 'GPIO, 11', pin_signal: ADC2_SE13/PTE11/PWT_IN1/LPTMR0_ALT1/FTM2_CH5/FXIO_D5/TRGMUX_OUT5, direction: OUTPUT}
   - {pin_num: '4', peripheral: GPIOE, signal: 'GPIO, 10', pin_signal: ADC2_SE12/PTE10/CLKOUT/FTM2_CH4/FXIO_D4/TRGMUX_OUT4, direction: OUTPUT}
   - {pin_num: '50', peripheral: ADC0, signal: 'SE, 0', pin_signal: ADC0_SE0/ACMP0_IN0/PTA0/FTM2_CH1/LPI2C0_SCLS/FXIO_D2/FTM2_QD_PHA/LPUART0_CTS/TRGMUX_OUT3}
+  - {pin_num: '26', peripheral: GPIOC, signal: 'GPIO, 0', pin_signal: ADC0_SE8/ACMP1_IN4/PTC0/FTM0_CH0/FTM1_CH6, direction: OUTPUT}
+  - {pin_num: '27', peripheral: GPIOC, signal: 'GPIO, 17', pin_signal: ADC0_SE15/PTC17/FTM1_FLT3/LPI2C1_SCLS, direction: OUTPUT}
+  - {pin_num: '28', peripheral: GPIOC, signal: 'GPIO, 16', pin_signal: ADC0_SE14/PTC16/FTM1_FLT2/LPI2C1_SDAS, direction: OUTPUT}
+  - {pin_num: '29', peripheral: GPIOC, signal: 'GPIO, 15', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3}
+  - {pin_num: '30', peripheral: GPIOC, signal: 'GPIO, 14', pin_signal: ADC0_SE12/ACMP2_IN5/PTC14/FTM1_CH2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -106,6 +116,27 @@ void BOARD_InitPins(void)
     };
     /* Initialize GPIO functionality on pin PTB5 (pin 18)  */
     GPIO_PinInit(BOARD_INITPINS_LED2_GPIO, BOARD_INITPINS_LED2_PIN, &LED2_config);
+
+    gpio_pin_config_t MUX_A_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC0 (pin 26)  */
+    GPIO_PinInit(BOARD_INITPINS_MUX_A_GPIO, BOARD_INITPINS_MUX_A_PIN, &MUX_A_config);
+
+    gpio_pin_config_t MUX_C_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC16 (pin 28)  */
+    GPIO_PinInit(BOARD_INITPINS_MUX_C_GPIO, BOARD_INITPINS_MUX_C_PIN, &MUX_C_config);
+
+    gpio_pin_config_t MUX_B_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC17 (pin 27)  */
+    GPIO_PinInit(BOARD_INITPINS_MUX_B_GPIO, BOARD_INITPINS_MUX_B_PIN, &MUX_B_config);
 
     gpio_pin_config_t LED1_config = {
         .pinDirection = kGPIO_DigitalOutput,
@@ -160,6 +191,21 @@ void BOARD_InitPins(void)
 
     /* PORTB7 (pin 11) is configured as EXTAL */
     PORT_SetPinMux(PORTB, 7U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTC0 (pin 26) is configured as PTC0 */
+    PORT_SetPinMux(BOARD_INITPINS_MUX_A_PORT, BOARD_INITPINS_MUX_A_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC14 (pin 30) is configured as PTC14 */
+    PORT_SetPinMux(BOARD_INITPINS_LED_DONE_PORT, BOARD_INITPINS_LED_DONE_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC15 (pin 29) is configured as PTC15 */
+    PORT_SetPinMux(BOARD_INITPINS_LED_IP_PORT, BOARD_INITPINS_LED_IP_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC16 (pin 28) is configured as PTC16 */
+    PORT_SetPinMux(BOARD_INITPINS_MUX_C_PORT, BOARD_INITPINS_MUX_C_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC17 (pin 27) is configured as PTC17 */
+    PORT_SetPinMux(BOARD_INITPINS_MUX_B_PORT, BOARD_INITPINS_MUX_B_PIN, kPORT_MuxAsGpio);
 
     /* PORTC4 (pin 62) is configured as SWD_CLK */
     PORT_SetPinMux(PORTC, 4U, kPORT_MuxAlt7);

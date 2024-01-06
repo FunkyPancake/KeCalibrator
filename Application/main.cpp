@@ -80,8 +80,8 @@ int main() {
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
-    NVIC_SetPriority(static_cast<IRQn_Type>(DMA0_IRQn + LPUART0_RX_DMA_CHANNEL), LPSPI0_IRQ_PRIORITY + 1);
-    NVIC_SetPriority(static_cast<IRQn_Type>(DMA0_IRQn + LPUART0_TX_DMA_CHANNEL), LPSPI0_IRQ_PRIORITY + 1);
+    // NVIC_SetPriority(static_cast<IRQn_Type>(DMA0_IRQn + LPUART0_RX_DMA_CHANNEL), LPSPI0_IRQ_PRIORITY + 1);
+    // NVIC_SetPriority(static_cast<IRQn_Type>(DMA0_IRQn + LPUART0_TX_DMA_CHANNEL), LPSPI0_IRQ_PRIORITY + 1);
     App();
     vTaskStartScheduler();
     /* Enter an infinite loop, just incrementing a counter. */
