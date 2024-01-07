@@ -25,6 +25,24 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/*! @name PORTD1 (number 1), BRYMEN_RX
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_BRYMEN_RX_PORT PORTD               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_BRYMEN_RX_PIN 1U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_BRYMEN_RX_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
+                                                          /* @} */
+
+/*! @name PORTD0 (number 2), BRYMEN_TX
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_BRYMEN_TX_PORT PORTD               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_BRYMEN_TX_PIN 0U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_BRYMEN_TX_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
+                                                          /* @} */
+
 /*! @name PORTE8 (number 17), LED1
   @{ */
 

@@ -148,16 +148,7 @@ instance:
     - interrupt_table:
       - 0: []
       - 1: []
-      - 2: []
-    - interrupts:
-      - 0:
-        - channelId: 'PDB1_IRQn'
-        - interrupt_t:
-          - IRQn: 'PDB1_IRQn'
-          - enable_interrrupt: 'enabled'
-          - enable_priority: 'true'
-          - priority: '2'
-          - enable_custom_name: 'false'
+    - interrupts: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -400,16 +391,16 @@ instance:
   - main:
     - mode: 'kLPSPI_Master'
     - clockSource: 'LpspiClock'
-    - clockSourceFreq: 'GetIpFreq'
+    - clockSourceFreq: 'ClocksTool_DefaultInit'
     - master:
-      - baudRate: '5000000'
-      - bitsPerFrame: '32'
-      - cpol: 'kLPSPI_ClockPolarityActiveHigh'
+      - baudRate: '7000'
+      - bitsPerFrame: '8'
+      - cpol: 'kLPSPI_ClockPolarityActiveLow'
       - cpha: 'kLPSPI_ClockPhaseSecondEdge'
       - direction: 'kLPSPI_LsbFirst'
-      - pcsToSckDelayInNanoSec: '1000'
-      - lastSckToPcsDelayInNanoSec: '1000'
-      - betweenTransferDelayInNanoSec: '1000'
+      - pcsToSckDelayInNanoSec: '0'
+      - lastSckToPcsDelayInNanoSec: '0'
+      - betweenTransferDelayInNanoSec: '0'
       - whichPcs: 'kLPSPI_Pcs0'
       - pcsActiveHighOrLow: 'kLPSPI_PcsActiveLow'
       - pinCfg: 'kLPSPI_SdiInSdoOut'
@@ -426,14 +417,14 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const lpspi_master_config_t LPSPI1_config = {
-  .baudRate = 5000000UL,
-  .bitsPerFrame = 32UL,
-  .cpol = kLPSPI_ClockPolarityActiveHigh,
+  .baudRate = 7000UL,
+  .bitsPerFrame = 8UL,
+  .cpol = kLPSPI_ClockPolarityActiveLow,
   .cpha = kLPSPI_ClockPhaseSecondEdge,
   .direction = kLPSPI_LsbFirst,
-  .pcsToSckDelayInNanoSec = 1000UL,
-  .lastSckToPcsDelayInNanoSec = 1000UL,
-  .betweenTransferDelayInNanoSec = 1000UL,
+  .pcsToSckDelayInNanoSec = 0UL,
+  .lastSckToPcsDelayInNanoSec = 0UL,
+  .betweenTransferDelayInNanoSec = 0UL,
   .whichPcs = kLPSPI_Pcs0,
   .pcsActiveHighOrLow = kLPSPI_PcsActiveLow,
   .pinCfg = kLPSPI_SdiInSdoOut,
@@ -450,14 +441,6 @@ static void LPSPI1_init(void) {
 /***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
-static void BOARD_InitPeripherals_CommonPostInit(void)
-{
-  /* Interrupt vector PDB1_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(PDB1_IRQN_IRQN, PDB1_IRQN_IRQ_PRIORITY);
-  /* Enable interrupt PDB1_IRQn request in the NVIC. */
-  EnableIRQ(PDB1_IRQN_IRQN);
-}
-
 void BOARD_InitPeripherals(void)
 {
   /* Global initialization */
@@ -469,8 +452,6 @@ void BOARD_InitPeripherals(void)
   CAN0_init();
   LPSPI0_init();
   LPSPI1_init();
-  /* Common post-initialization */
-  BOARD_InitPeripherals_CommonPostInit();
 }
 
 /***********************************************************************************************************************

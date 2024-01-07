@@ -35,12 +35,6 @@ extern "C" {
 #define DMA_CH0_DMA_REQUEST kDmaRequestMux0FTM0Channel1
 /* Selected eDMA channel number. */
 #define DMA_CH0_DMA_CHANNEL 0
-/* NVIC interrupt vector ID (number). */
-#define PDB1_IRQN_IRQN PDB1_IRQn
-/* NVIC interrupt vector priority. */
-#define PDB1_IRQN_IRQ_PRIORITY 2
-/* NVIC interrupt handler identifier. */
-#define PDB1_IRQN_IRQHANDLER PDB1_IRQHandler
 /* Definition of peripheral ID */
 #define CAN0_PERIPHERAL CAN0
 /* Definition of the clock source frequency */
@@ -58,7 +52,7 @@ extern "C" {
 /* Definition of peripheral ID */
 #define LPSPI1_PERIPHERAL LPSPI1
 /* Definition of clock source */
-#define LPSPI1_CLOCK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpspi1)
+#define LPSPI1_CLOCK_FREQ 21000000UL
 /* LPSPI1 interrupt vector ID (number). */
 #define LPSPI1_IRQN LPSPI1_IRQn
 /* LPSPI1 interrupt vector priority. */

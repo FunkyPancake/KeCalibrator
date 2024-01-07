@@ -51,6 +51,8 @@
                <pin_label pin_num="29" pin_signal="ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3" label="LED_IP" identifier="LED_IP"/>
                <pin_label pin_num="21" pin_signal="ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX" label="BRD_DETEC" identifier="BRD_DETEC"/>
                <pin_label pin_num="20" pin_signal="ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX" label="LED_DONE" identifier="LED_DONE"/>
+               <pin_label pin_num="2" pin_signal="ADC2_SE0/PTD0/FTM0_CH2/LPSPI1_SCK/FTM2_CH0/FXIO_D0/TRGMUX_OUT1" label="BRYMEN_TX" identifier="BRYMEN_TX"/>
+               <pin_label pin_num="1" pin_signal="ADC2_SE1/PTD1/FTM0_CH3/LPSPI1_SIN/FTM2_CH1/FXIO_D1/TRGMUX_OUT2" label="BRYMEN_RX" identifier="BRYMEN_RX"/>
             </pin_labels>
             <external_user_signals>
                <routingDetailsColumns/>
@@ -400,7 +402,7 @@
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="PCC.PCC_LPSPI1_CLK" description="LPSPI1 clock is inactive." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="PCC.PCC_LPSPI1_CLK" description="LPSPI1 clock is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
@@ -432,20 +434,8 @@
                         <array name="interrupt_table">
                            <struct name="0"/>
                            <struct name="1"/>
-                           <struct name="2"/>
                         </array>
-                        <array name="interrupts">
-                           <struct name="0">
-                              <setting name="channelId" value="PDB1_IRQn"/>
-                              <struct name="interrupt_t">
-                                 <setting name="IRQn" value="PDB1_IRQn"/>
-                                 <setting name="enable_interrrupt" value="enabled"/>
-                                 <setting name="enable_priority" value="true"/>
-                                 <setting name="priority" value="2"/>
-                                 <setting name="enable_custom_name" value="false"/>
-                              </struct>
-                           </struct>
-                        </array>
+                        <array name="interrupts"/>
                      </config_set>
                   </instance>
                   <instance name="CAN0" uuid="51e99d45-6719-4532-b4de-4f9b56c02306" type="flexcan" type_id="flexcan_477f6be3462ee2961b67c0825ef495e2" mode="interrupts" peripheral="CAN0" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
@@ -619,16 +609,16 @@
                      <config_set name="main">
                         <setting name="mode" value="kLPSPI_Master"/>
                         <setting name="clockSource" value="LpspiClock"/>
-                        <setting name="clockSourceFreq" value="GetIpFreq"/>
+                        <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
                         <struct name="master">
-                           <setting name="baudRate" value="5000000"/>
-                           <setting name="bitsPerFrame" value="32"/>
-                           <setting name="cpol" value="kLPSPI_ClockPolarityActiveHigh"/>
+                           <setting name="baudRate" value="7000"/>
+                           <setting name="bitsPerFrame" value="8"/>
+                           <setting name="cpol" value="kLPSPI_ClockPolarityActiveLow"/>
                            <setting name="cpha" value="kLPSPI_ClockPhaseSecondEdge"/>
                            <setting name="direction" value="kLPSPI_LsbFirst"/>
-                           <setting name="pcsToSckDelayInNanoSec" value="1000"/>
-                           <setting name="lastSckToPcsDelayInNanoSec" value="1000"/>
-                           <setting name="betweenTransferDelayInNanoSec" value="1000"/>
+                           <setting name="pcsToSckDelayInNanoSec" value="0"/>
+                           <setting name="lastSckToPcsDelayInNanoSec" value="0"/>
+                           <setting name="betweenTransferDelayInNanoSec" value="0"/>
                            <setting name="whichPcs" value="kLPSPI_Pcs0"/>
                            <setting name="pcsActiveHighOrLow" value="kLPSPI_PcsActiveLow"/>
                            <setting name="pinCfg" value="kLPSPI_SdiInSdoOut"/>

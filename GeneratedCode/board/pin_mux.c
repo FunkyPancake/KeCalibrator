@@ -36,6 +36,8 @@ pin_labels:
 - {pin_num: '29', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3, label: LED_IP, identifier: LED_IP}
 - {pin_num: '21', pin_signal: ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX, label: BRD_DETEC, identifier: BRD_DETEC}
 - {pin_num: '20', pin_signal: ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX, label: LED_DONE, identifier: LED_DONE}
+- {pin_num: '2', pin_signal: ADC2_SE0/PTD0/FTM0_CH2/LPSPI1_SCK/FTM2_CH0/FXIO_D0/TRGMUX_OUT1, label: BRYMEN_TX, identifier: BRYMEN_TX}
+- {pin_num: '1', pin_signal: ADC2_SE1/PTD1/FTM0_CH3/LPSPI1_SIN/FTM2_CH1/FXIO_D1/TRGMUX_OUT2, label: BRYMEN_RX, identifier: BRYMEN_RX}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -234,10 +236,10 @@ void BOARD_InitPins(void)
     PORT_SetPinMux(PORTC, 4U, kPORT_MuxAlt7);
 
     /* PORTD0 (pin 2) is configured as LPSPI1_SCK */
-    PORT_SetPinMux(PORTD, 0U, kPORT_MuxAlt3);
+    PORT_SetPinMux(BOARD_INITPINS_BRYMEN_TX_PORT, BOARD_INITPINS_BRYMEN_TX_PIN, kPORT_MuxAlt3);
 
     /* PORTD1 (pin 1) is configured as LPSPI1_SIN */
-    PORT_SetPinMux(PORTD, 1U, kPORT_MuxAlt3);
+    PORT_SetPinMux(BOARD_INITPINS_BRYMEN_RX_PORT, BOARD_INITPINS_BRYMEN_RX_PIN, kPORT_MuxAlt3);
 
     /* PORTD2 (pin 46) is configured as LPSPI1_SOUT */
     PORT_SetPinMux(PORTD, 2U, kPORT_MuxAlt3);

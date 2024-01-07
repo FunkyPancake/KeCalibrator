@@ -85,8 +85,8 @@ BOARD_InitPins:
   - {pin_num: '26', peripheral: GPIOC, signal: 'GPIO, 0', pin_signal: ADC0_SE8/ACMP1_IN4/PTC0/FTM0_CH0/FTM1_CH6, direction: OUTPUT}
   - {pin_num: '27', peripheral: GPIOC, signal: 'GPIO, 17', pin_signal: ADC0_SE15/PTC17/FTM1_FLT3/LPI2C1_SCLS, direction: OUTPUT}
   - {pin_num: '28', peripheral: GPIOC, signal: 'GPIO, 16', pin_signal: ADC0_SE14/PTC16/FTM1_FLT2/LPI2C1_SDAS, direction: OUTPUT}
-  - {pin_num: '29', peripheral: GPIOC, signal: 'GPIO, 15', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3}
-  - {pin_num: '21', peripheral: GPIOC, signal: 'GPIO, 2', pin_signal: ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX, direction: OUTPUT, gpio_init_state: 'true'}
+  - {pin_num: '29', peripheral: GPIOC, signal: 'GPIO, 15', pin_signal: ADC0_SE13/ACMP2_IN4/PTC15/FTM1_CH3, direction: OUTPUT, gpio_init_state: 'true'}
+  - {pin_num: '21', peripheral: GPIOC, signal: 'GPIO, 2', pin_signal: ADC0_SE10/ACMP0_IN5/XTAL32/PTC2/FTM0_CH2/CAN0_RX, direction: INPUT}
   - {pin_num: '16', peripheral: DAC0, signal: OUT, pin_signal: ACMP2_IN2/DAC0_OUT/PTE9/FTM0_CH7/LPUART2_CTS}
   - {pin_num: '20', peripheral: GPIOC, signal: 'GPIO, 3', pin_signal: ADC0_SE11/ACMP0_IN4/EXTAL32/PTC3/FTM0_CH3/CAN0_TX, direction: OUTPUT, gpio_init_state: 'true'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -127,8 +127,8 @@ void BOARD_InitPins(void)
     GPIO_PinInit(BOARD_INITPINS_MUX_A_GPIO, BOARD_INITPINS_MUX_A_PIN, &MUX_A_config);
 
     gpio_pin_config_t BRD_DETEC_config = {
-        .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
     };
     /* Initialize GPIO functionality on pin PTC2 (pin 21)  */
     GPIO_PinInit(BOARD_INITPINS_BRD_DETEC_GPIO, BOARD_INITPINS_BRD_DETEC_PIN, &BRD_DETEC_config);
@@ -139,6 +139,13 @@ void BOARD_InitPins(void)
     };
     /* Initialize GPIO functionality on pin PTC3 (pin 20)  */
     GPIO_PinInit(BOARD_INITPINS_LED_DONE_GPIO, BOARD_INITPINS_LED_DONE_PIN, &LED_DONE_config);
+
+    gpio_pin_config_t LED_IP_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 1U
+    };
+    /* Initialize GPIO functionality on pin PTC15 (pin 29)  */
+    GPIO_PinInit(BOARD_INITPINS_LED_IP_GPIO, BOARD_INITPINS_LED_IP_PIN, &LED_IP_config);
 
     gpio_pin_config_t MUX_C_config = {
         .pinDirection = kGPIO_DigitalOutput,

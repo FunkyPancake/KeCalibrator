@@ -11,9 +11,28 @@
 
 namespace CalApp
 {
+    Calibrator::Calibrator(Communication::Can::ICan* can,
+                           std::unique_ptr<Brymen869s> meter) : meter_(std::move(meter)), results_(CalSteps.size()),
+                                                                can_(can)
+    {
+        dac32_config_t config;
+        DAC32_GetDefaultConfig(&config);
+        DAC32_Init(DAC0, &config);
+        DAC32_Enable(DAC0, true);
+        DAC32_EnableBuffer(DAC0, false);
+
+        can->RegisterRxFrame(canRxId_, [this](const Communication::Can::CanFrame& canFrame)
+        {
+            this->OnNewCalMessage(canFrame);
+        });
+        SetMuxOutput(0);
+        GPIO_PinWrite(BOARD_INITPINS_LED_IP_GPIO, BOARD_INITPINS_LED_IP_PIN, true);
+        GPIO_PinWrite(BOARD_INITPINS_LED_DONE_GPIO, BOARD_INITPINS_LED_DONE_PIN, true);
+    }
+
     void Calibrator::SetMuxOutput(const uint8_t sel)
     {
-        const auto bitSel = 1<<sel;
+        const auto bitSel = 1 << sel;
         //SEL 0
         GPIO_PinWrite(BOARD_INITPINS_MUX_A_GPIO, BOARD_INITPINS_MUX_A_PIN, sel & 0x01);
         GPIO_PinWrite(BOARD_INITPINS_LED1_GPIO, BOARD_INITPINS_LED1_PIN, !(bitSel & 0x01));
@@ -43,10 +62,17 @@ namespace CalApp
         pcReady_ = canFrame.payload.b[0];
     }
 
+    void Calibrator::NotifyStateChange()
+    {
+        Communication::Can::Payload payload;
+        payload.b[0] = static_cast<uint8_t>(state_);
+        can_->Send(canTxId_ + 1, payload, 1);
+    }
+
     void Calibrator::MainFunction()
     {
         TickType_t xLastWakeTime = xTaskGetTickCount();
-        auto boardPresent = Calibrator::CheckBoardPresent();
+        const auto boardPresent = Calibrator::CheckBoardPresent();
         if (pcReady_ == true)
         {
             Communication::Can::Payload payload;
@@ -58,8 +84,7 @@ namespace CalApp
                 if (boardPresent == true)
                 {
                     state_ = CalState::InProgress;
-                    payload.b[0] = static_cast<uint8_t>(state_);
-                    can_->Send(canTxId_ + 1, payload, 1);
+                    NotifyStateChange();
                 }
                 break;
             case CalState::InProgress:
@@ -72,7 +97,8 @@ namespace CalApp
                 SetMuxOutput(0); //measure 5V rail
                 xLastWakeTime = xTaskGetTickCount();
                 vTaskDelayUntil(&xLastWakeTime, samplingTime_);
-
+                payload.s[0] = meter_->GetMeasurement();
+                can_->Send(canTxId_ + 1, payload, 2);
                 results_.clear();
 
 
@@ -83,11 +109,11 @@ namespace CalApp
                     SetMuxOutput(1); //measure DAC output
                     xLastWakeTime = xTaskGetTickCount();
                     vTaskDelayUntil(&xLastWakeTime, samplingTime_);
-                    results_.back();
+                    results_.back() = meter_->GetMeasurement();
                     SetMuxOutput(2); //measure adapter output
                     xLastWakeTime = xTaskGetTickCount();
                     vTaskDelayUntil(&xLastWakeTime, samplingTime_);
-                    results_.back();
+                    results_.back() = meter_->GetMeasurement();;
                 }
                 DAC32_EnableBufferOutput(DAC0, false);
 
@@ -95,14 +121,12 @@ namespace CalApp
                 if (!boardPresent)
                 {
                     state_ = CalState::Wait;
-                    payload.b[0] = static_cast<uint8_t>(state_);
-                    can_->Send(canTxId_ + 1, payload, 1);
+                    NotifyStateChange();
                     break;
                 }
                 memcpy(payload.b, results_.data(), sizeof(payload));
                 can_->Send(canTxId_, payload, 8);
 
-                can_->Send(canTxId_ + 1, payload, 4);
                 GPIO_PinWrite(BOARD_INITPINS_LED_IP_GPIO, BOARD_INITPINS_LED_IP_PIN, true);
                 GPIO_PinWrite(BOARD_INITPINS_LED_DONE_GPIO, BOARD_INITPINS_LED_DONE_PIN, false);
                 state_ = CalState::Done;
@@ -111,30 +135,10 @@ namespace CalApp
                 if (!boardPresent)
                 {
                     state_ = CalState::Wait;
-                    payload.b[0] = static_cast<uint8_t>(state_);
-                    can_->Send(canTxId_ + 1, payload, 1);
+                    NotifyStateChange();
                 }
                 break;
             }
-
         }
-    }
-
-    Calibrator::Calibrator(Communication::Can::FlexCan* can) : can_(can)
-    {
-        dac32_config_t config;
-        dac32_buffer_config_t buffer_config;
-        DAC32_GetDefaultConfig(&config);
-        DAC32_Init(DAC0, &config);
-        DAC32_Enable(DAC0, true);
-        DAC32_EnableBuffer(DAC0, false);
-
-        can->RegisterRxFrame(canRxId_, [this](const Communication::Can::CanFrame& canFrame)
-        {
-            this->OnNewCalMessage(canFrame);
-        });
-        SetMuxOutput(0);
-        GPIO_PinWrite(BOARD_INITPINS_LED_IP_GPIO, BOARD_INITPINS_LED_IP_PIN, true);
-        GPIO_PinWrite(BOARD_INITPINS_LED_DONE_GPIO, BOARD_INITPINS_LED_DONE_PIN, true);
     }
 } // App
