@@ -66,14 +66,14 @@ namespace CalApp
     {
         Communication::Can::Payload payload;
         payload.b[0] = static_cast<uint8_t>(state_);
-        can_->Send(canTxId_ + 1, payload, 1);
+        can_->Send(canTxStautsId_, payload, 1);
     }
 
     void Calibrator::MainFunction()
     {
         TickType_t xLastWakeTime = xTaskGetTickCount();
         const auto boardPresent = Calibrator::CheckBoardPresent();
-        if (pcReady_ == true)
+        if (pcReady_)
         {
             Communication::Can::Payload payload;
             switch (state_)
@@ -81,7 +81,7 @@ namespace CalApp
             case CalState::Wait:
                 GPIO_PinWrite(BOARD_INITPINS_LED_IP_GPIO, BOARD_INITPINS_LED_IP_PIN, true);
                 GPIO_PinWrite(BOARD_INITPINS_LED_DONE_GPIO, BOARD_INITPINS_LED_DONE_PIN, true);
-                if (boardPresent == true)
+                if (boardPresent)
                 {
                     state_ = CalState::InProgress;
                     NotifyStateChange();
@@ -98,7 +98,7 @@ namespace CalApp
                 xLastWakeTime = xTaskGetTickCount();
                 vTaskDelayUntil(&xLastWakeTime, samplingTime_);
                 payload.s[0] = meter_->GetMeasurement();
-                can_->Send(canTxId_ + 1, payload, 2);
+                can_->Send(canTxVsupId, payload, 2);
                 results_.clear();
 
 
@@ -125,7 +125,7 @@ namespace CalApp
                     break;
                 }
                 memcpy(payload.b, results_.data(), sizeof(payload));
-                can_->Send(canTxId_, payload, 8);
+                can_->Send(canTxCalId, payload, 8);
 
                 GPIO_PinWrite(BOARD_INITPINS_LED_IP_GPIO, BOARD_INITPINS_LED_IP_PIN, true);
                 GPIO_PinWrite(BOARD_INITPINS_LED_DONE_GPIO, BOARD_INITPINS_LED_DONE_PIN, false);

@@ -20,7 +20,9 @@ namespace CalApp
             Done
         };
         constexpr static uint32_t samplingTime_ =  pdMS_TO_TICKS(2750);
-        constexpr static uint32_t canTxId_ = 0x500;
+        constexpr static uint32_t canTxStautsId_ = 0x500;
+        constexpr static uint32_t canTxCalId= 0x501;
+        constexpr static uint32_t canTxVsupId= 0x501;
         constexpr static uint32_t canRxId_ = 0x510;
         inline const static std::vector<uint16_t> CalSteps{(500*4096/5000), (4500*4096/5000)};
         CalState state_{CalState::Wait};
@@ -36,6 +38,7 @@ namespace CalApp
     public:
         explicit Calibrator(Communication::Can::ICan* can,std::unique_ptr<Brymen869s> meter);
         void MainFunction();
+
         ~Calibrator() = default;
     };
 } // App
